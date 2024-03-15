@@ -1,0 +1,8 @@
+name: test-syntax
+
+on:
+  pull_request:
+
+jobs:
+  testing:
+    uses: ./.github/workflows/_reusable_syntax-test.yml
