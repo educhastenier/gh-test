@@ -1,0 +1,10 @@
+name: test-syntax
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  testing:
+    uses: ./.github/workflows/_reusable_syntax-test.yml

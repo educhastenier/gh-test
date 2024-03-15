@@ -1,0 +1,15 @@
+name: test-syntax
+on:
+    workflow_call: 
+
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Is syntax valid?
+        run: |
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
+            echo "This is a pull-request"
+          else
+            echo "This is not a pull-request"
+          fi
