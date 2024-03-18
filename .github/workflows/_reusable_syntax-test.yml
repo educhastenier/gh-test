@@ -18,7 +18,7 @@ jobs:
           else
             echo "This is not a pull-request"
           fi
-          if [[ '${{ inputs.release }}' == 'true' ]]; then
+          if [[ ${{ inputs.release }} ]]; then
             echo "This is a release"
           else
             echo "This is not a release"
