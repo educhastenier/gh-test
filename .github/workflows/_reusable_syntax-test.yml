@@ -1,6 +1,11 @@
 name: test-syntax
 on:
-    workflow_call: 
+    workflow_call:
+      inputs:
+        release:
+          type: boolean
+          description: 'Is this a release?'
+          default: false
 
 jobs:
   testing:
@@ -8,8 +13,13 @@ jobs:
     steps:
       - name: Is syntax valid?
         run: |
-          if [[ "${{ github.event_name == 'pull_request' }}" ]]; then
+          if [[ "${{ github.event_name }}" == "pull_request" ]]; then
             echo "This is a pull-request"
           else
             echo "This is not a pull-request"
+          fi
+          if [[ '${{ inputs.release }}' == 'true' ]]; then
+            echo "This is a release"
+          else
+            echo "This is not a release"
           fi
