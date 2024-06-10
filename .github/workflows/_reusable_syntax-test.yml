@@ -14,12 +14,41 @@ jobs:
       - name: Is syntax valid?
         run: |
           if [[ "${{ github.event_name }}" == "pull_request" ]]; then
-            echo "This is a pull-request"
+            echo "This IS a pull-request"
           else
-            echo "This is not a pull-request"
+            echo "This is NOT a pull-request"
           fi
-          if [[ ${{ inputs.release }} ]]; then
-            echo "This is a release"
+          if [[ '${{ inputs.release }}' == 'true' ]]; then # condition `if [[ ${{ inputs.release }} ]]` does NOT work (it evaluates to `if [[ false ]]`)
+            echo "This IS a release"
           else
-            echo "This is not a release"
+            echo "This is NOT a release"
           fi
+          echo "var: ${{ vars.BONITA_GLOBAL_VAR }}"
+          echo "secret: ${{ secrets.APP_SECRET }}"
+          echo "env var: ${{ env.MY_ENV_VAR }}"
+          echo "Github token: ${{ secrets.GITHUB_TOKEN }}"
+          echo "github.head_ref: ${{ github.head_ref }}"
+          echo "github.ref_name: ${{ github.ref_name }}"
+          echo "github.ref: ${{ github.ref }}"
+
+  test-matrix:
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        conf: [ 'a', 'b']
+        include:
+          - conf: 'a'
+            is-valid: inputs.release
+          - conf: 'b'
+            is-valid: inputs.release
+    steps:
+      - name: Display if valid
+        if: ${{ matrix.is-valid }}
+        run: |
+          echo "=================="
+          echo "|DISPLAY IS VALID|"
+          echo "=================="
+      - name: Display if valid
+        run: |
+          echo "Matrix conf: ${{ matrix.conf }}"
+          echo "Skip tests: ${{ matrix.is-valid }}"
