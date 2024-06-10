@@ -1,0 +1,18 @@
+name: test-syntax
+
+on:
+  pull_request:
+
+  workflow_dispatch:
+    inputs:
+      release:
+        type: boolean
+        description: 'Is this a release?'
+        default: false
+
+jobs:
+  testing:
+    uses: ./.github/workflows/_reusable_syntax-test.yml
+    with:
+      release: ${{ github.event.inputs.release || false }}
+    secrets: inherit

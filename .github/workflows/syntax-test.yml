@@ -8,3 +8,4 @@ on:
 jobs:
   testing:
     uses: ./.github/workflows/_reusable_syntax-test.yml
+    secrets: inherit
